@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  width: 100dvw;
+  height: 25dvh;
+  display: grid;
+  place-content: center;
+}
+
+#head {
+  width: 100dvw;
+  height: 10dvh;
+  display: grid;
+  place-content: center;
+  margin-top: 100px;
+  font-size: 20px;
+}
+
+a {
+  color: inherit;
+  margin: 0 10px;
+}
