@@ -11,8 +11,8 @@ function Scene() {
     <div id="canvas_wrapper">
       <Canvas shadows={true}>
         {/* <color args={["grey"]} attach="background" /> */}
-        <color args={["#e2eafc"]} attach="background" />
-        <fogExp2 attach="fog" args={["#e2eafc", 0.001]} />
+        <color args={["#62CDFF"]} attach="background" />
+        <fogExp2 attach="fog" args={["#72D5F8", 0.001]} />
 
         <axesHelper args={[50]} />
         <Stats />
@@ -35,7 +35,7 @@ function Scene() {
 
 
         {/* Lights 💡 */}
-        <ambientLight color="#ffffff" intensity={0.15} />
+        <ambientLight color="#ffffff" intensity={0.8} />
         <directionalLight color="#cddafd" position={[0, 50, -100]} intensity={0.8} />
         {/* <pointLight color="green" position={[1, 1, 1]} intensity={3} />
         <pointLight color="yellow" position={[-2, 3, 1]} intensity={3} />
@@ -46,12 +46,12 @@ function Scene() {
         {/* ground and sphere */}
         <mesh rotation={[-Math.PI*0.5, 0, 0]}>
           <planeGeometry args={[10000, 10000]} />
-          <meshStandardMaterial color="#c1d3fe" roughness={0.8} metalness={0.2} side={THREE.DoubleSide} />
+          <meshStandardMaterial color="#DEF872" roughness={0.8} metalness={0.2} side={THREE.DoubleSide} />
         </mesh>
 
-        <mesh position={[0, 100, 0]} scale={5}>
-          <sphereGeometry args={[5, 128, 128]} />
-          <meshPhongMaterial color="#ffffff" />
+        <mesh position={[0, 100, 0]} scale={1} >
+          <torusKnotGeometry args={[10, 6, 64, 8, 1, 5]} />
+          <meshPhongMaterial color="#F8729B" />
         </mesh>
 
         <Bee />
