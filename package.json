@@ -2,6 +2,7 @@
   "name": "nature-of-code",
   "private": true,
   "version": "0.0.0",
+  "main": "main.jsx",
   "type": "module",
   "scripts": {
     "start": "vite",
