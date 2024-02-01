@@ -36,7 +36,7 @@ function Scene() {
 
         {/* Lights 💡 */}
         <ambientLight color="#ffffff" intensity={0.8} />
-        <directionalLight color="#cddafd" position={[0, 50, -100]} intensity={0.8} />
+        <directionalLight color="#cddafd" position={[0, 50, 100]} intensity={0.8} />
         {/* <pointLight color="green" position={[1, 1, 1]} intensity={3} />
         <pointLight color="yellow" position={[-2, 3, 1]} intensity={3} />
         <pointLight color="blue" position={[2, 3, 1]} intensity={3} />
