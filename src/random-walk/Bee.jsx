@@ -1,13 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from '@react-three/fiber'
-import { gsap } from "gsap";
 import { Vector3 } from "three";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function randomDirection() {
-  return Math.random() > 0.5 ? 1 : -1;
 }
 
 function Bee(props){
@@ -16,32 +12,42 @@ function Bee(props){
   const objectRef = useRef();
 
   const pos = new Vector3(0, 100, 100);
-  const vel = new Vector3();
+  const prev = new Vector3();
 
-  const [move, setMove] = useState(0);
+  // const [move, setMove] = useState(0);
 
-  var frameCount = 0
+  // var frameCount = 0
   useFrame(() => {
-    frameCount++
-    if (frameCount%60 > 30){
-    setMove((value) => value + 1)
-    }
+    // frameCount++
+    // if (frameCount%60 > 30){
+    // setMove((value) => value + 1)
 
+    prev.copy(pos)
 
-  })
-
-  useEffect(() => {
     const step = new Vector3();
     step.randomDirection()
-    step.multiplyScalar(10)
+    // step.multiplyScalar(20)
+
+    const r = Math.random()*100
+    if (r < 100){
+      step.multiplyScalar(randomInt(2, 10));
+    } else {
+      step.setLength(2)
+    }
 
     pos.add(step)
 
+  //not seeing too much of a difference
     // beeRef.current.position.set(pos.x, pos.y, pos.z)
-    beeRef.current.position.lerp(pos, 1)
+    // beeRef.current.position.lerp(pos, 1)
+    beeRef.current.position.lerpVectors(prev, pos, 0.5)
 
-    // console.log(beeRef.current.position)
-  }, [move])
+    console.log(step)
+
+
+        // }
+  })
+
 
 //   useEffect(() => {
 //     gsap.to(objectRef.current.rotation, {
