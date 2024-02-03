@@ -15,66 +15,33 @@ function Bee(props){
   const beeRef = useRef();
   const objectRef = useRef();
 
-
-  const intPos = new Vector3(0, 100, 100);
-  const vel = new Vector3(1, -1, -1);
-  var pos = intPos.clone()
-  pos.overwrite=true
-
+  const pos = new Vector3(0, 100, 100);
+  const vel = new Vector3();
 
   const [move, setMove] = useState(0);
 
   var frameCount = 0
   useFrame(() => {
     frameCount++
-    // if (frameCount%60 > 30){
+    if (frameCount%60 > 30){
     setMove((value) => value + 1)
-    // }
+    }
 
-    // intPos.add(vel)
-    // pos.set(pos.x+1, pos.y+1, pos.z+1)
-    console.log(pos.add( randomInt(0,5) * randomDirection()))
+
   })
 
   useEffect(() => {
-    // pos.setX (pos.x + randomInt(0,5) * randomDirection())
-    pos.y = pos.y + randomInt(0,5) * randomDirection()
-    pos.z = pos.z + randomInt(0,5) * randomDirection()
-    // console.log(pos)
+    const step = new Vector3();
+    step.randomDirection()
+    step.multiplyScalar(10)
 
+    pos.add(step)
 
-    // pos.add(vel);
-    // pos.addVectors(pos,vel);
+    // beeRef.current.position.set(pos.x, pos.y, pos.z)
+    beeRef.current.position.lerp(pos, 1)
 
-
-    // pos.set(intPos.add(vel).x, intPos.add(vel).y, intPos.add(vel).z)
-    // pos.copy(intPos.add(vel))
-
-
-    // pos.add(vel);
-    // pos.set(pos.x, pos.y, pos.z);
-
-    // intPos.clone().add(new Vector3(1, 1, 1))
-    // pos.copy(intPos)
-
-    // pos.copy(intPos.clone().add(new Vector3(1, 1, 1)))
-
-    // pos.copy(intPos).addScalar( 0.5 )
-
-   
-    
-
-
-    gsap.to(beeRef.current.position, pos);
-    // gsap.to(beeRef.current.position, {
-    //   x:x,
-    //   y:1,
-    //   z:1
-    // });
-
-      // console.log(pos)
-
-  }, [move]);
+    // console.log(beeRef.current.position)
+  }, [move])
 
 //   useEffect(() => {
 //     gsap.to(objectRef.current.rotation, {
@@ -89,7 +56,7 @@ function Bee(props){
   return (
     <>
     <object3D ref={objectRef}>
-    <mesh ref={beeRef} position={position ? position : [0, 100, 100]} scale={scale ? scale : 5} onUpdate={() => setMove((value) => value + 1)}>
+    <mesh ref={beeRef} position={position ? position : [0, 100, 100]} scale={scale ? scale : 5} >
       <sphereGeometry />
       <meshBasicMaterial color = "yellow" />
     </mesh>
