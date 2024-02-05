@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from '@react-three/fiber'
-import { Vector3 } from "three";
+import { Object3D, Vector3 } from "three";
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -9,53 +9,47 @@ function randomInt(min, max) {
 function Bee(props){
   const { position, scale } = props
   const beeRef = useRef();
-  const objectRef = useRef();
+  const trailRef = useRef();
 
   const pos = new Vector3(-50, 0, 50);
-  const prev = new Vector3();
 
   const flower = new Vector3();
   const vel = new Vector3();
   const acc = new Vector3();
 
+  const prev = new Vector3();
+  const step = new Vector3();
+
   vel.randomDirection();
   vel.setLength(5)
 
-  const [move, setMove] = useState(0);
   var frameCount = 0
 
-
   useFrame(() => {
-
+    frameCount++
 
   /// random walk w levy flight
-    prev.copy(pos)
 
-    const step = new Vector3();
+  // if (frameCount%3 == 0){
+    prev.copy(pos)
     step.randomDirection()
 
     const r = Math.random()*100
-    if (r < 5){
+    if (r < 10){
       step.multiplyScalar(randomInt(2, 10));
+      // step.stepLength(randomInt(10, 20));
     } else {
       step.setLength(1)
     }
 
     pos.add(step)
+  // }
 
-    // // beeRef.current.position.set(pos.x, pos.y, pos.z)
+    // beeRef.current.position.set(pos.x, pos.y, pos.z)
     // beeRef.current.position.lerpVectors(prev, pos, 0.5)
 
-
-    // frameCount++
-    // if (frameCount%60 > 30){
-    // setMove((value) => value + 1)
-
-
   /// vel acc
-    // acc.randomDirection();
-
-
+    // if (frameCount%60 > 20){
     flower.set(beeRef.current.parent.position.x, beeRef.current.parent.position.y, beeRef.current.parent.position.z)
 
     acc.subVectors(flower, pos);
@@ -65,26 +59,21 @@ function Bee(props){
     vel.clampLength(0, 2);
 
     pos.add(vel);
-    
-
-    // console.log(acc);
-    // console.log("pos: ", pos, "vel: ", vel, "acc: ", acc)
-
-    // }
+    // } 
 
     beeRef.current.position.set(pos.x, pos.y, pos.z);
+
   });
 
 
   return (
     <>
-    <object3D ref={objectRef}>
+    <object3D>
     <mesh ref={beeRef} position={position ? position : [0, 0, 0]} scale={scale ? scale : 5} >
       <sphereGeometry />
       <meshBasicMaterial color = "yellow" />
     </mesh>
     </object3D>
-
     </>
   );
 }
