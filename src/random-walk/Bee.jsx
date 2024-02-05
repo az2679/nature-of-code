@@ -11,58 +11,75 @@ function Bee(props){
   const beeRef = useRef();
   const objectRef = useRef();
 
-  const pos = new Vector3(0, 100, 100);
+  const pos = new Vector3(-50, 0, 50);
   const prev = new Vector3();
 
-  // const [move, setMove] = useState(0);
+  const flower = new Vector3();
+  const vel = new Vector3();
+  const acc = new Vector3();
 
-  // var frameCount = 0
+  vel.randomDirection();
+  vel.setLength(5)
+
+  const [move, setMove] = useState(0);
+  var frameCount = 0
+
+
   useFrame(() => {
-    // frameCount++
-    // if (frameCount%60 > 30){
-    // setMove((value) => value + 1)
 
+
+  /// random walk w levy flight
     prev.copy(pos)
 
     const step = new Vector3();
     step.randomDirection()
-    // step.multiplyScalar(20)
 
     const r = Math.random()*100
-    if (r < 100){
+    if (r < 5){
       step.multiplyScalar(randomInt(2, 10));
     } else {
-      step.setLength(2)
+      step.setLength(1)
     }
 
     pos.add(step)
 
-  //not seeing too much of a difference
-    // beeRef.current.position.set(pos.x, pos.y, pos.z)
-    // beeRef.current.position.lerp(pos, 1)
-    beeRef.current.position.lerpVectors(prev, pos, 0.5)
-
-    console.log(step)
+    // // beeRef.current.position.set(pos.x, pos.y, pos.z)
+    // beeRef.current.position.lerpVectors(prev, pos, 0.5)
 
 
-        // }
-  })
+    // frameCount++
+    // if (frameCount%60 > 30){
+    // setMove((value) => value + 1)
 
 
-//   useEffect(() => {
-//     gsap.to(objectRef.current.rotation, {
-//     y: Math.PI * 2,
-//     duration: 10,
-//     repeat: -1,
-//     ease: 'none'
-//   });
-// }, [objectRef]);
+  /// vel acc
+    // acc.randomDirection();
+
+
+    flower.set(beeRef.current.parent.position.x, beeRef.current.parent.position.y, beeRef.current.parent.position.z)
+
+    acc.subVectors(flower, pos);
+    acc.setLength(0.05);
+
+    vel.add(acc);
+    vel.clampLength(0, 2);
+
+    pos.add(vel);
+    
+
+    // console.log(acc);
+    // console.log("pos: ", pos, "vel: ", vel, "acc: ", acc)
+
+    // }
+
+    beeRef.current.position.set(pos.x, pos.y, pos.z);
+  });
 
 
   return (
     <>
     <object3D ref={objectRef}>
-    <mesh ref={beeRef} position={position ? position : [0, 100, 100]} scale={scale ? scale : 5} >
+    <mesh ref={beeRef} position={position ? position : [0, 0, 0]} scale={scale ? scale : 5} >
       <sphereGeometry />
       <meshBasicMaterial color = "yellow" />
     </mesh>
