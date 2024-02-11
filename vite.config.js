@@ -16,7 +16,7 @@ export default defineConfig({
         main: resolve(__dirname, '/index.html'),
         'random-walk': resolve(__dirname, '/random-walk/index.html'),
         noise: resolve(__dirname, '/noise/index.html'),
-        force: resolve(__dirname, '/force/index.html'),
+        forces: resolve(__dirname, '/forces/index.html'),
       },
     },
   },
