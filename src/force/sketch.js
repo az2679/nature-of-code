@@ -1,16 +1,19 @@
 let movers = [];
 let mu = 0.1;
+let dragC = 0.2;
 
 function setup() {
   createCanvas(400, 400);
   for (let i = 0; i < 10; i++) {
-    movers[i] = new Mover(random(width), 200, random(1, 8));
+    movers[i] = new Mover(random(width), 0, random(1, 8));
   }
-  mover = new Mover(100, 200, 2);
 }
 
 function draw() {
   background(0);
+  fill(255, 125);
+  noStroke();
+  rect(0, height / 2, width, height / 2);
 
   for (let mover of movers) {
     mover.show();
@@ -27,5 +30,9 @@ function draw() {
     }
 
     mover.friction();
+
+    if (mover.pos.y > height / 2) {
+      mover.drag(dragC);
+    }
   }
 }

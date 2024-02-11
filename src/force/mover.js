@@ -7,6 +7,17 @@ class Mover {
     this.r = sqrt(this.mass) * 10;
   }
 
+  drag(c) {
+    let drag = this.vel.copy();
+    drag.normalize();
+    drag.mult(-1);
+
+    let speedSq = this.vel.magSq();
+    drag.setMag(c * speedSq);
+
+    this.applyForce(drag);
+  }
+
   friction() {
     let diff = height - (this.pos.y + this.r);
     if (diff < 1) {
@@ -21,7 +32,6 @@ class Mover {
   }
 
   applyForce(force) {
-    // this.acc.add(force);
     let f = p5.Vector.div(force, this.mass);
     this.acc.add(f);
   }
