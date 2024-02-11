@@ -14,9 +14,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, '/index.html'),
-        'random-walk': resolve(__dirname, 'src/random-walk/index.html'),
-        noise: resolve(__dirname, 'src/noise/index.html'),
-        force: resolve(__dirname, 'src/force/index.html'),
+        'random-walk': resolve(__dirname, '/random-walk/index.html'),
+        noise: resolve(__dirname, '/noise/index.html'),
+        force: resolve(__dirname, '/force/index.html'),
       },
     },
   },
