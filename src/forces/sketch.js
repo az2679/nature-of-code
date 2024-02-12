@@ -1,65 +1,103 @@
-// let movers = [];
-// let sun;
-
-// function setup() {
-//   createCanvas(600, 600);
-//   background(0);
-//   for (let i = 0; i < 10; i++) {
-//     let pos = p5.Vector.random2D();
-//     let vel = pos.copy();
-//     vel.setMag(random(10, 15));
-//     pos.setMag(random(100, 150));
-//     vel.rotate(PI / 2);
-//     let m = random(10, 15);
-//     movers[i] = new Mover(pos.x, pos.y, vel.x, vel.y, m);
-//   }
-//   sun = new Mover(0, 0, 0, 0, 500);
-// }
-
-// function draw() {
-//   background(0, 20);
-//   translate(width / 2, height / 2);
-//   for (let mover of movers) {
-//     sun.attract(mover);
-//     for (let other of movers) {
-//       if (mover != other) {
-//         mover.attract(other);
-//       }
-//     }
-//   }
-//   for (let mover of movers) {
-//     mover.show();
-//     mover.update();
-//   }
-//   // sun.show();
-// }
-
+let movers = [];
+let sun;
 let qtree;
+let G = 0.35;
 
 function setup() {
-  createCanvas(400, 400);
-  let boundary = new Rectangle(200, 200, 200, 200);
-  qtree = new QuadTree(boundary, 4);
+  createCanvas(600, 600);
 
-  for (let i = 0; i < 300; i++) {
-    let x = randomGaussian(width / 2, width / 8);
-    let y = randomGaussian(height / 2, height / 8);
-    let p = new Point(x, y);
-    qtree.insert(p);
+  for (let i = 0; i < 100; i++) {
+    let pos = p5.Vector.random2D();
+    let vel = pos.copy();
+    vel.setMag(random(10, 15));
+    pos.setMag(random(150, 200));
+    vel.rotate(PI / 2);
+    let m = random(10, 15);
+    movers[i] = new Mover(pos.x, pos.y, vel.x, vel.y, m);
   }
+  sun = new Mover(0, 0, 0, 0, 500);
+  // movers[0] = new Mover(300, 200, 0, 5, 10);
+  // movers[1] = new Mover(100, 200, 0, -5, 10);
+  // movers[2] = new Mover(200, 300, -5, 0, 10);
+  // movers[3] = new Mover(200, 100, 5, 0, 10);
+  background(0);
 }
 
 function draw() {
+  clear();
   background(0);
-  qtree.show();
+  blendMode(ADD);
+  let boundary = new Rectangle(0, 0, width, height);
+  qtree = QuadTree.create(boundary, 8);
 
-  stroke(0, 255, 0);
+  // Display and move all Things
+  for (let m of movers) {
+    let point = new Point(m.pos.x, m.pos.y, m);
+    qtree.insert(point);
+  }
+
+  for (let mover of movers) {
+    attract(mover, qtree);
+
+    sun.attract(mover);
+    // for (let other of movers) {
+    //   if (mover !== other) {
+    //     mover.attract(other);
+    //     // stroke(255);
+    //     // line(mover.pos.x, mover.pos.y, other.pos.x, other.pos.y);
+    //   }
+    // }
+  }
+
+  push();
+  translate(width / 2, height / 2);
+
+  for (let mover of movers) {
+    mover.update();
+    mover.show();
+  }
+
+  show(qtree);
+  pop();
+  //sun.show();
+}
+
+function attract(m, qtree) {
+  let d = dist(m.pos.x, m.pos.y, qtree.boundary.x, qtree.boundary.y);
+  if (d < 25) {
+    if (qtree.points) {
+      for (let p of qtree.points) {
+        if (m != p.userData) {
+          p.userData.attract(m);
+        }
+      }
+    }
+  } else {
+    if (qtree.points) {
+      let temp = new Mover(qtree.boundary.x, qtree.boundary.y, 0, 0, m.mass * qtree.points.length);
+      temp.attract(m);
+    }
+  }
+
+  if (qtree.divided) {
+    attract(m, qtree.northeast);
+    attract(m, qtree.northwest);
+    attract(m, qtree.southeast);
+    attract(m, qtree.southwest);
+  }
+}
+
+function show(qtree) {
+  stroke(255);
+  noFill();
+  strokeWeight(0.25);
   rectMode(CENTER);
-  let range = new Rectangle(mouseX, mouseY, 25, 25);
-  rect(range.x, range.y, range.w * 2, range.h * 2);
-  let points = qtree.query(range);
-  for (let p of points) {
-    strokeWeight(4);
-    point(p.x, p.y);
+  rect(qtree.boundary.x, qtree.boundary.y, qtree.boundary.w, qtree.boundary.h);
+
+  if (qtree.divided) {
+    show(qtree.northeast);
+    show(qtree.northwest);
+    show(qtree.southeast);
+    show(qtree.southwest);
   }
 }
