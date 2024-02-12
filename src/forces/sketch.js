@@ -39,7 +39,7 @@ function draw() {
   //create new point at each mouse xy location
   for (let i = 0; i < moons.length; i++) {
     // moons[i].show();
-    strokeWeight(8);
+    strokeWeight(20);
     stroke(255);
     point(moons[i].pos.x, moons[i].pos.y);
   }
@@ -50,7 +50,8 @@ function draw() {
     sun.attract(mover);
 
     for (let i = 0; i < moons.length; i++) {
-      moons[i].repulse(mover);
+      // moons[i].repulse(mover);
+      moons[i].attract(mover);
     }
   }
 
@@ -62,7 +63,7 @@ function draw() {
     mover.show();
   }
   qtree.show();
-  sun.show();
+  // sun.show();
   pop();
 }
 
