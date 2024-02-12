@@ -16,10 +16,6 @@ function setup() {
     movers[i] = new Mover(pos.x, pos.y, vel.x, vel.y, m);
   }
   sun = new Mover(0, 0, 0, 0, 500);
-  // movers[0] = new Mover(300, 200, 0, 5, 10);
-  // movers[1] = new Mover(100, 200, 0, -5, 10);
-  // movers[2] = new Mover(200, 300, -5, 0, 10);
-  // movers[3] = new Mover(200, 100, 5, 0, 10);
   background(0);
 }
 
@@ -30,7 +26,6 @@ function draw() {
   let boundary = new Rectangle(0, 0, width, height);
   qtree = QuadTree.create(boundary, 8);
 
-  // Display and move all Things
   for (let m of movers) {
     let point = new Point(m.pos.x, m.pos.y, m);
     qtree.insert(point);
@@ -38,28 +33,17 @@ function draw() {
 
   for (let mover of movers) {
     attract(mover, qtree);
-
     sun.attract(mover);
-    // for (let other of movers) {
-    //   if (mover !== other) {
-    //     mover.attract(other);
-    //     // stroke(255);
-    //     // line(mover.pos.x, mover.pos.y, other.pos.x, other.pos.y);
-    //   }
-    // }
   }
 
   push();
   translate(width / 2, height / 2);
-
   for (let mover of movers) {
     mover.update();
     mover.show();
   }
-
   show(qtree);
   pop();
-  //sun.show();
 }
 
 function attract(m, qtree) {
