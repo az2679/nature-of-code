@@ -3,9 +3,12 @@ let sun;
 let qtree;
 let G = 0.35;
 
-function setup() {
-  createCanvas(600, 600);
+let moons = [];
 
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+
+  //creating movers with random mass. random spawn position within a donut around center, velocity set tangent via rotation 90 degrees.
   for (let i = 0; i < 100; i++) {
     let pos = p5.Vector.random2D();
     let vel = pos.copy();
@@ -23,30 +26,56 @@ function draw() {
   clear();
   background(0);
   blendMode(ADD);
+
+  //creating quadtree and placing points within quadtree for each mover
   let boundary = new Rectangle(0, 0, width, height);
   qtree = QuadTree.create(boundary, 8);
-
   for (let m of movers) {
     let point = new Point(m.pos.x, m.pos.y, m);
     qtree.insert(point);
   }
+  //why are we creating a new point for each mover to insert into the qtree instead of inserting the movers directly into the tree?
 
-  for (let mover of movers) {
-    attract(mover, qtree);
-    sun.attract(mover);
+  //create new point at each mouse xy location
+  for (let i = 0; i < moons.length; i++) {
+    // moons[i].show();
+    strokeWeight(8);
+    stroke(255);
+    point(moons[i].pos.x, moons[i].pos.y);
   }
 
+  //mutual attraction to each other + gravitational attraction to sun
+  for (let mover of movers) {
+    attractQuad(mover, qtree);
+    sun.attract(mover);
+
+    for (let i = 0; i < moons.length; i++) {
+      moons[i].repulse(mover);
+    }
+  }
+
+  //center sketch at origin & use push/pop so translate vector will translate from origin instead of last point
   push();
   translate(width / 2, height / 2);
   for (let mover of movers) {
     mover.update();
     mover.show();
   }
-  show(qtree);
+  qtree.show();
+  sun.show();
   pop();
 }
 
-function attract(m, qtree) {
+//save mouse pos when pressed >> create new mover at mouse pos
+function mousePressed() {
+  // moons.push(createVector(mouseX, mouseY));
+
+  let moon = new Mover(mouseX, mouseY, 0, 0, 100);
+  moons.push(moon);
+}
+
+//mutual attraction - each point attracts every other point but not themselves. but if spiral out of qtree bounds, create temp mover to attract them back in.
+function attractQuad(m, qtree) {
   let d = dist(m.pos.x, m.pos.y, qtree.boundary.x, qtree.boundary.y);
   if (d < 25) {
     if (qtree.points) {
@@ -64,24 +93,9 @@ function attract(m, qtree) {
   }
 
   if (qtree.divided) {
-    attract(m, qtree.northeast);
-    attract(m, qtree.northwest);
-    attract(m, qtree.southeast);
-    attract(m, qtree.southwest);
-  }
-}
-
-function show(qtree) {
-  stroke(255);
-  noFill();
-  strokeWeight(0.25);
-  rectMode(CENTER);
-  rect(qtree.boundary.x, qtree.boundary.y, qtree.boundary.w, qtree.boundary.h);
-
-  if (qtree.divided) {
-    show(qtree.northeast);
-    show(qtree.northwest);
-    show(qtree.southeast);
-    show(qtree.southwest);
+    attractQuad(m, qtree.northeast);
+    attractQuad(m, qtree.northwest);
+    attractQuad(m, qtree.southeast);
+    attractQuad(m, qtree.southwest);
   }
 }

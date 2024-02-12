@@ -423,6 +423,21 @@ class QuadTree {
 
     return this.points.length;
   }
+
+  show() {
+    stroke(255);
+    noFill();
+    strokeWeight(0.25);
+    rectMode(CENTER);
+    rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
+
+    if (this.divided) {
+      this.northeast.show();
+      this.northwest.show();
+      this.southeast.show();
+      this.southwest.show();
+    }
+  }
 }
 
 if (typeof module !== 'undefined') {
