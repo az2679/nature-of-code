@@ -10,7 +10,7 @@ export default defineConfig({
   root: resolve(__dirname, 'src'),
   publicDir: resolve(__dirname, 'public'),
   build: {
-    outDir: './docs',
+    outDir: '../docs',
     rollupOptions: {
       input: {
         main: 'src/index.js',
