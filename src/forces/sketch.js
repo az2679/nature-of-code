@@ -1,6 +1,6 @@
-// import Mover from './mover.js';
-// import Attractor from './attractor.js';
-// import { Point, Rectangle, QuadTree, Circle } from './quadtree.js';
+import Mover from './mover.js';
+import Attractor from './attractor.js';
+import { Point, Rectangle, QuadTree, Circle } from './quadtree.js';
 
 let movers = [];
 let qtree;
@@ -114,7 +114,7 @@ new p5((p) => {
     // }
   };
 
-  p.setup = () => {
+  p.mousePressed = () => {
     let moon = new Mover(mouseX, mouseY, 0, 0, 100);
     moons.push(moon);
 
