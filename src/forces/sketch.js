@@ -115,7 +115,7 @@ new p5((p) => {
   };
 
   p.mousePressed = () => {
-    let moon = new Mover(mouseX, mouseY, 0, 0, 100);
+    let moon = new Mover(p.mouseX, p.mouseY, 0, 0, 100);
     moons.push(moon);
 
     // console.log(moon.intersect(sun));
