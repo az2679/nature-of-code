@@ -1,7 +1,7 @@
 // Daniel Shiffman
 // http://codingtra.in
 
-export class Point {
+class Point {
   constructor(x, y, data) {
     this.x = x;
     this.y = y;

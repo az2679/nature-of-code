@@ -1,6 +1,4 @@
 import { Mover } from './mover.js';
-import { Attractor } from './attractor.js';
-import { Quadtree } from './quadtree.js';
 
 let movers = [];
 let qtree;
