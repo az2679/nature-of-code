@@ -1,5 +1,3 @@
-import { Mover } from './mover.js';
-
 let movers = [];
 let qtree;
 let sun, paint, paint1;

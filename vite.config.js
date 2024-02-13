@@ -9,8 +9,8 @@ export default defineConfig({
   plugins: [react()],
   root: resolve(__dirname, 'src'),
   publicDir: resolve(__dirname, 'public'),
-  base: '/nature-of-code/',
   build: {
+    base: '/nature-of-code/',
     outDir: '../docs',
     rollupOptions: {
       input: {
