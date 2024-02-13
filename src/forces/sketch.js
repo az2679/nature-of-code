@@ -38,21 +38,6 @@ function draw() {
   let boundary = new Rectangle(0, 0, width, height);
   qtree = QuadTree.create(boundary, 8);
 
-  // let pos = p5.Vector.random2D();
-  // let vel = pos.copy();
-  // vel.setMag(random(15, 20));
-  // pos.setMag(random(150, 200));
-  // vel.rotate(PI / 2);
-  // let m = random(20, 25);
-
-  // if (frameCount % 2 == 0) {
-  //   movers.push(new Mover(pos.x, pos.y, vel.x, vel.y, m));
-  // }
-
-  // if (movers.length > 200) {
-  //   movers.splice(0, 1);
-  // }
-
   for (let m of movers) {
     let point = new Point(m.pos.x, m.pos.y, m);
     qtree.insert(point);
@@ -107,14 +92,6 @@ function draw() {
       fill(dlerp);
     }
 
-    // } else if (movers[i].intersect(paint1)) {
-    //   fill(colorLerp);
-    // } else {
-    //   fill(colorLerp);
-    // }
-    // if (movers[i].intersect(sun)) {
-    // }
-
     movers[i].update();
     movers[i].show();
   }
@@ -124,25 +101,23 @@ function draw() {
   // sun.show();
   paint.show();
   paint1.show();
-  qtree.show();
+  // qtree.show();
   pop();
 
-  // console.log(moons, moons.intersect);
-  if (moons.length > 1) {
-    // console.log(moons[0].intersect(sun));
-  }
+  // if (moons.length > 1) {
+  // console.log(moons[0].intersect(sun));
+  // }
 }
 
 function mousePressed() {
   let moon = new Mover(mouseX, mouseY, 0, 0, 100);
   moons.push(moon);
 
-  console.log(moon);
   // console.log(moon.intersect(sun));
 
   if (moon.intersect(sun)) {
     // moons.splice(0, moons.length)
-    // console.log('moons');
+    // console.log('test');
   }
 }
 
