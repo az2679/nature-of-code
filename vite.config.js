@@ -6,13 +6,13 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  plugins: [react(), resolve()],
+  plugins: [react()],
   root: resolve(__dirname, 'src'),
   publicDir: resolve(__dirname, 'public'),
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(__dirname, 'index.js'),
         'random-walk': resolve(__dirname, 'random-walk/index.html'),
         noise: resolve(__dirname, 'noise/index.html'),
         forces: resolve(__dirname, 'forces/index.html'),
