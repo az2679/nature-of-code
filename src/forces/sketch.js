@@ -13,7 +13,7 @@ let dragC = 0.5;
 let mu = 0.2;
 
 new p5((p) => {
-  function setup() {
+  p.setup = () => {
     p.createCanvas(windowWidth, windowHeight);
     p.background(246, 238, 227);
     p.noStroke();
@@ -33,9 +33,9 @@ new p5((p) => {
     sun = new Mover(0, 0, 0, 0, 500);
     paint = new Mover(-150, -150, 0, 0, 5000);
     paint1 = new Mover(150, 150, 0, 0, 5000);
-  }
+  };
 
-  function draw() {
+  p.draw = () => {
     p.clear();
     p.background(160);
     // blendMode(ADD);
@@ -112,9 +112,9 @@ new p5((p) => {
     // if (moons.length > 1) {
     // console.log(moons[0].intersect(sun));
     // }
-  }
+  };
 
-  function mousePressed() {
+  p.setup = () => {
     let moon = new Mover(mouseX, mouseY, 0, 0, 100);
     moons.push(moon);
 
@@ -124,7 +124,7 @@ new p5((p) => {
       // moons.splice(0, moons.length)
       // console.log('test');
     }
-  }
+  };
 
   function attractQuad(m, qtree) {
     let d = p.dist(m.pos.x, m.pos.y, qtree.boundary.x, qtree.boundary.y);
