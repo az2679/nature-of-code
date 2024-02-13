@@ -13,7 +13,7 @@ export default defineConfig({
     outDir: '../docs',
     rollupOptions: {
       input: {
-        main: 'src/index.js',
+        main: 'src/index.html',
         'random-walk': 'src/random-walk/main.jsx',
         noise: 'src/noise/sketch.js',
         forces: 'src/forces/sketch.js',
