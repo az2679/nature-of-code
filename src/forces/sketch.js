@@ -1,3 +1,7 @@
+import Mover from './mover.js';
+import Attractor from './attractor.js';
+import QuadTree from './quadtree.js';
+
 let movers = [];
 let qtree;
 let sun, paint, paint1;
