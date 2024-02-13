@@ -10,12 +10,13 @@ export default defineConfig({
   root: resolve(__dirname, 'src'),
   publicDir: resolve(__dirname, 'public'),
   build: {
+    outDir: '../docs',
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-        'random-walk': resolve(__dirname, 'random-walk/index.html'),
-        noise: resolve(__dirname, 'noise/index.html'),
-        forces: resolve(__dirname, 'forces/index.html'),
+        main: 'src/index.js',
+        'random-walk': 'src/random-walk/main.jsx',
+        noise: 'src/noise/sketch.js',
+        forces: 'src/forces/sketch.js',
       },
     },
   },
