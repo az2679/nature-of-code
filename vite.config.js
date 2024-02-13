@@ -10,14 +10,20 @@ export default defineConfig({
   root: resolve(__dirname, 'src'),
   publicDir: resolve(__dirname, 'public'),
   build: {
-    outDir: '../docs',
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, '/src/index.html'),
-        'random-walk': resolve(__dirname, '/src/random-walk/index.html'),
-        noise: resolve(__dirname, '/src/noise/index.html'),
-        forces: resolve(__dirname, '/src/forces/index.html'),
-      },
+    lib: {
+      main: resolve(__dirname, '/lib/index.js'),
     },
+    name: 'main',
+    fileName: 'bundles',
+    format: 'cjs',
+  },
+  outDir: '../docs',
+  rollupOptions: {
+    external: ['react'],
   },
 });
+
+// main: resolve(__dirname, '/src/index.html'),
+// 'random-walk': resolve(__dirname, '/src/random-walk/index.html'),
+// noise: resolve(__dirname, '/src/noise/index.html'),
+// forces: resolve(__dirname, '/src/forces/index.html'),
