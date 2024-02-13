@@ -14,9 +14,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'src/index.html',
-        'random-walk': 'src/random-walk/main.jsx',
-        noise: 'src/noise/sketch.js',
-        forces: 'src/forces/sketch.js',
+        'random-walk': 'src/random-walk/index.html',
+        noise: 'src/noise/index.html',
+        forces: 'src/forces/index.html',
       },
     },
   },
