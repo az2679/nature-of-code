@@ -18,6 +18,12 @@ export default defineConfig({
         noise: resolve(__dirname, '/noise/index.html'),
         forces: resolve(__dirname, '/forces/index.html'),
       },
+      output: {
+        main: resolve(__dirname, '/index.html'),
+        'random-walk': resolve(__dirname, '/random-walk/index.html'),
+        noise: resolve(__dirname, '/noise/index.html'),
+        forces: resolve(__dirname, '/forces/index.html'),
+      },
     },
   },
 });
