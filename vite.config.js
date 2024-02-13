@@ -19,10 +19,7 @@ export default defineConfig({
         forces: resolve(__dirname, '/src/forces/index.html'),
       },
       output: {
-        main: '/src/index.html',
-        'random-walk': '/src/random-walk/index.html',
-        noise: '/src/noise/index.html',
-        forces: '/src/forces/index.html',
+        dir: 'docs',
       },
     },
   },
