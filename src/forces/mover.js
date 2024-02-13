@@ -7,10 +7,20 @@ class Mover {
     this.r = sqrt(this.mass) * 2;
   }
 
+  intersect(other) {
+    let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y);
+    return d < this.r + other.r;
+    // if (d < this.r + other.r) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+  }
+
   repulse(mover) {
     let force = p5.Vector.sub(this.pos, mover.pos);
     let distanceSq = constrain(force.magSq(), 100, 1000);
-    let G = 0.5;
+    let G = 1;
     let strength = (G * (this.mass * mover.mass)) / distanceSq;
     force.setMag(strength);
     force.mult(-1);
@@ -20,9 +30,12 @@ class Mover {
   attract(mover) {
     let force = p5.Vector.sub(this.pos, mover.pos);
     let distanceSq = constrain(force.magSq(), 100, 1000);
-    let G = 0.5;
+    // let G = 0.5;
     let strength = (G * (this.mass * mover.mass)) / distanceSq;
     force.setMag(strength);
+    // if (distanceSq < 10) {
+    //   force.mult(-10);
+    // }
     mover.applyForce(force);
   }
 
@@ -76,9 +89,6 @@ class Mover {
   }
 
   show() {
-    stroke(255);
-    strokeWeight(2);
-    fill(255, 100);
     ellipse(this.pos.x, this.pos.y, this.r * 2);
   }
 }

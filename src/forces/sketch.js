@@ -1,81 +1,151 @@
 let movers = [];
-let sun;
 let qtree;
-let G = 0.35;
-
+let sun, paint, paint1;
 let moons = [];
+let color1, color2;
+
+let G = 0.35;
+let dragC = 0.5;
+let mu = 0.2;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  background(246, 238, 227);
+  noStroke();
 
-  //creating movers with random mass. random spawn position within a donut around center, velocity set tangent via rotation 90 degrees.
-  for (let i = 0; i < 100; i++) {
+  color1 = color(248, 148, 143);
+  color2 = color(203, 190, 250);
+
+  for (let i = 0; i < 50; i++) {
     let pos = p5.Vector.random2D();
     let vel = pos.copy();
-    vel.setMag(random(10, 15));
+    vel.setMag(random(5, 10));
     pos.setMag(random(150, 200));
     vel.rotate(PI / 2);
     let m = random(10, 15);
     movers[i] = new Mover(pos.x, pos.y, vel.x, vel.y, m);
   }
   sun = new Mover(0, 0, 0, 0, 500);
-  background(0);
+  paint = new Mover(-150, -150, 0, 0, 5000);
+  paint1 = new Mover(150, 150, 0, 0, 5000);
 }
 
 function draw() {
   clear();
-  background(0);
-  blendMode(ADD);
+  background(160);
+  // blendMode(ADD);
 
-  //creating quadtree and placing points within quadtree for each mover
   let boundary = new Rectangle(0, 0, width, height);
   qtree = QuadTree.create(boundary, 8);
+
+  // let pos = p5.Vector.random2D();
+  // let vel = pos.copy();
+  // vel.setMag(random(15, 20));
+  // pos.setMag(random(150, 200));
+  // vel.rotate(PI / 2);
+  // let m = random(20, 25);
+
+  // if (frameCount % 2 == 0) {
+  //   movers.push(new Mover(pos.x, pos.y, vel.x, vel.y, m));
+  // }
+
+  // if (movers.length > 200) {
+  //   movers.splice(0, 1);
+  // }
+
   for (let m of movers) {
     let point = new Point(m.pos.x, m.pos.y, m);
     qtree.insert(point);
   }
-  //why are we creating a new point for each mover to insert into the qtree instead of inserting the movers directly into the tree?
 
-  //create new point at each mouse xy location
+  strokeWeight(20);
+  stroke(255);
   for (let i = 0; i < moons.length; i++) {
     // moons[i].show();
-    strokeWeight(20);
-    stroke(255);
     point(moons[i].pos.x, moons[i].pos.y);
   }
 
-  //mutual attraction to each other + gravitational attraction to sun
+  strokeWeight(1);
+
   for (let mover of movers) {
     attractQuad(mover, qtree);
     sun.attract(mover);
 
     for (let i = 0; i < moons.length; i++) {
-      // moons[i].repulse(mover);
       moons[i].attract(mover);
     }
   }
 
-  //center sketch at origin & use push/pop so translate vector will translate from origin instead of last point
+  noStroke();
+
   push();
   translate(width / 2, height / 2);
-  for (let mover of movers) {
-    mover.update();
-    mover.show();
+
+  fill(0);
+  ellipse(sun.pos.x, sun.pos.y, 20);
+
+  for (let i = 0; i < movers.length; i++) {
+    let colorLerp = lerpColor(color1, color2, i / movers.length);
+
+    let d = dist(movers[i].pos.x, movers[i].pos.y, sun.pos.x, sun.pos.y);
+    let dmapped = map(d, 0, width * 0.15, 0, 255);
+
+    let distlerp = map(d, 0, width * 0.2, 0, 1);
+    let dlerp = lerpColor(color1, color2, distlerp);
+    fill(dlerp);
+
+    let gravity = createVector(0, 0.2);
+    let weight = p5.Vector.mult(gravity, movers[i].mass);
+    // movers[i].applyForce(weight);
+    // movers[i].friction();
+
+    if (movers[i].intersect(paint)) {
+      fill(dmapped);
+    } else if (movers[i].intersect(paint1)) {
+      fill(map(d, 0, width * 0.4, 255, 0));
+    } else {
+      fill(dlerp);
+    }
+
+    // } else if (movers[i].intersect(paint1)) {
+    //   fill(colorLerp);
+    // } else {
+    //   fill(colorLerp);
+    // }
+    // if (movers[i].intersect(sun)) {
+    // }
+
+    movers[i].update();
+    movers[i].show();
   }
-  qtree.show();
+
+  stroke(255);
+  noFill();
   // sun.show();
+  paint.show();
+  paint1.show();
+  qtree.show();
   pop();
+
+  // console.log(moons, moons.intersect);
+  if (moons.length > 1) {
+    // console.log(moons[0].intersect(sun));
+  }
 }
 
-//save mouse pos when pressed >> create new mover at mouse pos
 function mousePressed() {
-  // moons.push(createVector(mouseX, mouseY));
-
   let moon = new Mover(mouseX, mouseY, 0, 0, 100);
   moons.push(moon);
+
+  console.log(moon);
+  // console.log(moon.intersect(sun));
+
+  if (moon.intersect(sun)) {
+    // moons.splice(0, moons.length)
+    // console.log('moons');
+  }
 }
 
-//mutual attraction - each point attracts every other point but not themselves. but if spiral out of qtree bounds, create temp mover to attract them back in.
 function attractQuad(m, qtree) {
   let d = dist(m.pos.x, m.pos.y, qtree.boundary.x, qtree.boundary.y);
   if (d < 25) {

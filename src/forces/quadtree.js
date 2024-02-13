@@ -425,9 +425,9 @@ class QuadTree {
   }
 
   show() {
-    stroke(255);
-    noFill();
-    strokeWeight(0.25);
+    // stroke(255);
+    // noFill();
+    // strokeWeight(0.25);
     rectMode(CENTER);
     rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
 
