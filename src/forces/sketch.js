@@ -40,7 +40,7 @@ function draw() {
   // blendMode(ADD);
 
   let boundary = new Rectangle(0, 0, width, height);
-  qtree = QuadTree.create(boundary, 8);
+  qtree = Quadtree.create(boundary, 8);
 
   for (let m of movers) {
     let point = new Point(m.pos.x, m.pos.y, m);
