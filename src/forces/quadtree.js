@@ -1,7 +1,7 @@
 // Daniel Shiffman
 // http://codingtra.in
 
-class Point {
+export class Point {
   constructor(x, y, data) {
     this.x = x;
     this.y = y;
@@ -20,7 +20,7 @@ class Point {
   }
 }
 
-class Rectangle {
+export class Rectangle {
   constructor(x, y, w, h) {
     this.x = x;
     this.y = y;
@@ -84,7 +84,7 @@ class Rectangle {
 }
 
 // circle class for a circle shaped query
-class Circle {
+export class Circle {
   constructor(x, y, r) {
     this.x = x;
     this.y = y;
@@ -123,7 +123,7 @@ class Circle {
   }
 }
 
-class QuadTree {
+export class QuadTree {
   DEFAULT_CAPACITY = 8;
   MAX_DEPTH = 8;
 
@@ -428,20 +428,20 @@ class QuadTree {
     // stroke(255);
     // noFill();
     // strokeWeight(0.25);
-    rectMode(CENTER);
-    rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
-
-    if (this.divided) {
-      this.northeast.show();
-      this.northwest.show();
-      this.southeast.show();
-      this.southwest.show();
-    }
+    //
+    // rectMode(CENTER);
+    // rect(this.boundary.x, this.boundary.y, this.boundary.w, this.boundary.h);
+    // if (this.divided) {
+    //   this.northeast.show();
+    //   this.northwest.show();
+    //   this.southeast.show();
+    //   this.southwest.show();
+    // }
   }
 }
 
-// if (typeof module !== 'undefined') {
-//   module.exports = { Point, Rectangle, QuadTree, Circle };
-// }
+if (typeof module !== 'undefined') {
+  module.exports = { Point, Rectangle, QuadTree, Circle };
+}
 
-export { Point, Rectangle, QuadTree, Circle };
+// export { Point, Rectangle, QuadTree, Circle };
