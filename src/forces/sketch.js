@@ -17,11 +17,19 @@ let mu = 0.2;
 //   draw();
 // };
 
-new p5((p) => {
-  p.setup = setup;
-  p.draw = draw;
-  p.mousePressed = mousePressed;
+new p5((sketch) => {
+  sketch.setup = () => {
+    sketch.createCanvas(400, 400);
+    sketch.background(100);
+  };
+  sketch.draw = () => {};
 });
+
+// new p5((p) => {
+//   p.setup = setup;
+//   p.draw = draw;
+//   p.mousePressed = mousePressed;
+// });
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
