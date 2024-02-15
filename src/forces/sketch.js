@@ -36,9 +36,9 @@ new p5((p) => {
 // });
 
 function setup1() {
-  createCanvas(windowWidth, windowHeight);
-  background(246, 238, 227);
-  noStroke();
+  p.createCanvas(windowWidth, windowHeight);
+  p.background(246, 238, 227);
+  p.noStroke();
 
   //   color1 = color(248, 148, 143);
   //   color2 = color(203, 190, 250);
