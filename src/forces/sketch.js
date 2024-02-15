@@ -26,8 +26,10 @@ new p5((sketch) => {
 });
 
 // new p5((p) => {
-//   p.setup = setup;
-//   p.draw = draw;
+// p.setup = () => {setup()};
+// p.draw = () => {draw()};
+// p.mousePressed = () => {mousePressed()};
+
 //   p.mousePressed = mousePressed;
 // });
 
