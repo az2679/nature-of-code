@@ -1,5 +1,6 @@
 import Mover from './mover.js';
 import { Point, Rectangle } from './quadtree.js';
+import 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js';
 
 let movers = [];
 let qtree;
