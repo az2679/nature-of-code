@@ -11,6 +11,11 @@ let G = 0.35;
 let dragC = 0.5;
 let mu = 0.2;
 
+window.onload = function () {
+  setup();
+  draw();
+};
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(246, 238, 227);
@@ -117,9 +122,6 @@ function draw() {
 
   requestAnimationFrame(draw);
 }
-
-setup();
-draw();
 
 function mousePressed() {
   let moon = new Mover(mouseX, mouseY, 0, 0, 100);
