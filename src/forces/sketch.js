@@ -21,6 +21,8 @@ new p5((p) => {
     color1 = p.color(248, 148, 143);
     color2 = p.color(203, 190, 250);
 
+    //
+
     for (let i = 0; i < 50; i++) {
       let pos = p5.Vector.random2D();
       let vel = pos.copy();
