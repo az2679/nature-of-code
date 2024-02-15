@@ -1,4 +1,4 @@
-export default class Mover {
+class Mover {
   constructor(x, y, vx, vy, m) {
     this.pos = createVector(x, y);
     this.vel = createVector(vx, vy);
