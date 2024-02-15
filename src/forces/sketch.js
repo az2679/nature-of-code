@@ -14,7 +14,7 @@ let mu = 0.2;
 
 new p5((p) => {
   p.setup = () => {
-    p.createCanvas(windowWidth, windowHeight);
+    p.createCanvas(p.windowWidth, p.windowHeight);
     p.background(246, 238, 227);
     p.noStroke();
 
@@ -123,7 +123,7 @@ new p5((p) => {
   };
 
   p.mousePressed = () => {
-    let moon = new Mover(mouseX, mouseY, 0, 0, 100);
+    let moon = new Mover(p.mouseX, p.mouseY, 0, 0, 100);
     moons.push(moon);
 
     // console.log(moon.intersect(sun));
