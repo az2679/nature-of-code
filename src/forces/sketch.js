@@ -17,12 +17,13 @@ let mu = 0.2;
 //   draw();
 // };
 
-new p5((sketch) => {
-  sketch.setup = () => {
-    sketch.createCanvas(400, 400);
-    sketch.background(100);
+new p5((p) => {
+  p.setup = () => {
+    setup();
   };
-  sketch.draw = () => {};
+  p.draw = () => {
+    draw();
+  };
 });
 
 // new p5((p) => {
