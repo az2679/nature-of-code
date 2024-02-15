@@ -1,5 +1,5 @@
-// import Mover from './mover.js';
-// import { Point, Rectangle } from './quadtree.js';
+import Mover from './mover.js';
+import { Point, Rectangle } from './quadtree.js';
 // import 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js';
 
 let movers = [];
@@ -12,10 +12,16 @@ let G = 0.35;
 let dragC = 0.5;
 let mu = 0.2;
 
-window.onload = function () {
-  setup();
-  draw();
-};
+// window.onload = function () {
+//   setup();
+//   draw();
+// };
+
+new p5((p) => {
+  p.setup = setup;
+  p.draw = draw;
+  p.mousePressed = mousePressed;
+});
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -117,11 +123,13 @@ function draw() {
   // console.log(moons[0].intersect(sun));
   // }
 
-  if (mouseIsPressed) {
-    mousePressed();
-  }
+  //
+  //
+  // if (mouseIsPressed) {
+  //   mousePressed();
+  // }
 
-  requestAnimationFrame(draw);
+  // requestAnimationFrame(draw);
 }
 
 function mousePressed() {
