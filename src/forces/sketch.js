@@ -19,7 +19,7 @@ let mu = 0.2;
 
 new p5((p) => {
   p.setup = () => {
-    setup1();
+    setup1(p);
   };
   // p.draw = () => {
   //   draw1();
@@ -35,7 +35,7 @@ new p5((p) => {
 //   p.mousePressed = mousePressed;
 // });
 
-function setup1() {
+function setup1(p) {
   p.createCanvas(windowWidth, windowHeight);
   p.background(246, 238, 227);
   p.noStroke();
