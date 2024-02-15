@@ -24,8 +24,8 @@ new p5((p) => {
     for (let i = 0; i < 50; i++) {
       let pos = p5.Vector.random2D();
       let vel = pos.copy();
-      vel.setMag(random(5, 10));
-      pos.setMag(random(150, 200));
+      vel.setMag(p.random(5, 10));
+      pos.setMag(p.random(150, 200));
       vel.rotate(PI / 2);
       let m = p.random(10, 15);
       movers[i] = new Mover(pos.x, pos.y, vel.x, vel.y, m);
@@ -84,7 +84,7 @@ new p5((p) => {
       let dlerp = p.lerpColor(color1, color2, distlerp);
       p.fill(dlerp);
 
-      let gravity = p.createVector(0, 0.2);
+      let gravity = createVector(0, 0.2);
       let weight = p5.Vector.mult(gravity, movers[i].mass);
       // movers[i].applyForce(weight);
       // movers[i].friction();
