@@ -19,11 +19,12 @@ let mu = 0.2;
 
 new p5((p) => {
   p.setup = () => {
-    setup();
+    setup1();
   };
   p.draw = () => {
-    draw();
+    draw1();
   };
+  p.mousePressed = mousePressed1;
 });
 
 // new p5((p) => {
@@ -34,7 +35,7 @@ new p5((p) => {
 //   p.mousePressed = mousePressed;
 // });
 
-function setup() {
+function setup1() {
   createCanvas(windowWidth, windowHeight);
   background(246, 238, 227);
   noStroke();
@@ -56,7 +57,7 @@ function setup() {
   paint1 = new Mover(150, 150, 0, 0, 5000);
 }
 
-function draw() {
+function draw1() {
   clear();
   background(160);
   // blendMode(ADD);
@@ -143,7 +144,7 @@ function draw() {
   // requestAnimationFrame(draw);
 }
 
-function mousePressed() {
+function mousePressed1() {
   let moon = new Mover(mouseX, mouseY, 0, 0, 100);
   moons.push(moon);
 
